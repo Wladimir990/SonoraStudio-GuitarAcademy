@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Detalle del Producto - SonoraStudio{% endblock %}
+
+{% block encabezado %}Detalle del Producto{% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+    <div class="card-body">
+
+        <h2 class="card-title">
+            {{ producto.nombre }}
+        </h2>
+
+        {% if producto.imagen %}
+        <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid mb-3"
+            style="max-height: 350px;">
+        {% endif %}
+
+        <p>
+            <strong>Categoría:</strong>
+            {{ producto.categoria }}
+        </p>
+
+        <p>
+            <strong>Marca:</strong>
+            {{ producto.marca }}
+        </p>
+
+        <p>
+            <strong>Descripción:</strong>
+            {{ producto.descripcion }}
+        </p>
+
+        <p>
+            <strong>Precio:</strong>
+            ${{ producto.precio }}
+        </p>
+
+        <p>
+            <strong>Stock:</strong>
+            {{ producto.stock }}
+        </p>
+
+        <p>
+            <strong>Estado:</strong>
+
+            {% if producto.activo %}
+            <span class="badge bg-success">Activo</span>
+            {% else %}
+            <span class="badge bg-secondary">Inactivo</span>
+            {% endif %}
+        </p>
+
+        {% if producto.ficha_tecnica %}
+        <p>
+            <a href="{{ producto.ficha_tecnica.url }}" target="_blank" class="btn btn-outline-secondary">
+                Ver ficha técnica
+            </a>
+        </p>
+        {% endif %}
+
+        <hr>
+
+        <a href="{% url 'tienda:producto_editar' producto.pk %}" class="btn btn-warning">
+            Editar
+        </a>
+
+        <a href="{% url 'tienda:producto_eliminar' producto.pk %}" class="btn btn-danger">
+            Eliminar
+        </a>
+
+        <a href="{% url 'tienda:producto_lista' %}" class="btn btn-secondary">
+            Volver
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}

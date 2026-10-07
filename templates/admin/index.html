@@ -1,0 +1,473 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Panel de Administración - SonoraStudio
+{% endblock %}
+
+{% block contenido %}
+
+<style>
+    .sonora-admin-hero {
+        position: relative;
+        width: 100%;
+        min-height: 400px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 42px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, .18);
+        background: #333;
+    }
+
+    .sonora-photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, .52);
+        z-index: 2;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        min-height: 400px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        padding: 35px;
+        box-sizing: border-box;
+
+        text-align: center;
+        color: white;
+    }
+
+    .hero-badge {
+        background: #e5aa00;
+        color: #111;
+        padding: 8px 18px;
+        border-radius: 6px;
+        font-weight: 800;
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .hero-content h1 {
+        color: white;
+        font-size: 48px;
+        margin: 0 0 10px 0;
+        font-weight: 800;
+    }
+
+    .hero-content p {
+        max-width: 720px;
+        color: rgba(255, 255, 255, .94);
+        font-size: 18px;
+        line-height: 1.55;
+        margin: 0 0 25px 0;
+    }
+
+    .session-actions {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .user-box {
+        background: white;
+        color: #111;
+        padding: 11px 18px;
+        border-radius: 7px;
+        font-weight: 700;
+    }
+
+    .logout-form {
+        margin: 0;
+    }
+
+    .logout-btn {
+        background: #dc3545;
+        color: white;
+        border: 0;
+        padding: 11px 18px;
+        border-radius: 7px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .logout-btn:hover {
+        background: #bd2130;
+    }
+
+    .admin-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+        gap: 28px;
+        align-items: start;
+        margin-bottom: 45px;
+    }
+
+    .admin-card {
+        background: white;
+        border: 1px solid #e4e4e4;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .07);
+    }
+
+    .admin-card-title {
+        background: #12121e;
+        color: #e5aa00;
+        padding: 17px 20px;
+        font-size: 17px;
+        font-weight: 800;
+    }
+
+    .admin-row {
+        padding: 17px 20px;
+        border-bottom: 1px solid #eee;
+
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .admin-row:last-child {
+        border-bottom: 0;
+    }
+
+    .admin-model {
+        color: #171717;
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .admin-actions {
+        display: flex;
+        gap: 9px;
+    }
+
+    .admin-button {
+        padding: 9px 13px;
+        border-radius: 6px;
+        text-decoration: none !important;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .admin-button-gold {
+        background: #e5aa00;
+        color: #111 !important;
+    }
+
+    .admin-button-dark {
+        background: #20252a;
+        color: white !important;
+    }
+
+    .quick-content {
+        padding: 20px;
+    }
+
+    .quick-link {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+
+        background: #e5aa00;
+        color: #111 !important;
+
+        text-align: center;
+        text-decoration: none !important;
+
+        padding: 13px 15px;
+        margin-bottom: 12px;
+
+        border-radius: 7px;
+        font-weight: 700;
+    }
+
+    .quick-link:hover {
+        background: #f2ba16;
+    }
+
+    .system-info {
+        padding: 20px;
+        line-height: 1.7;
+        color: #222;
+    }
+
+    @media(max-width:900px) {
+        .admin-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-content h1 {
+            font-size: 38px;
+        }
+    }
+</style>
+
+
+<section class="sonora-admin-hero">
+
+    <img class="sonora-photo" alt="SonoraStudio Music Store">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+            PANEL DE GESTIÓN
+        </span>
+
+        <h1>SonoraStudio</h1>
+
+        <p>
+            Administración central de clientes, productos,
+            ventas y servicios digitales de
+            SonoraStudio & Guitar Academy.
+        </p>
+
+        <div class="session-actions">
+
+            <span class="user-box">
+                👤 {{ request.user.username }}
+            </span>
+
+            <form method="post" action="{% url 'admin:logout' %}" class="logout-form">
+                {% csrf_token %}
+
+                <button type="submit" class="logout-btn">
+                    Cerrar sesión
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="admin-grid">
+
+    <main>
+
+        {% if app_list %}
+
+        {% for app in app_list %}
+
+        <section class="admin-card">
+
+            <div class="admin-card-title">
+                {{ app.name }}
+            </div>
+
+            {% for model in app.models %}
+
+            <div class="admin-row">
+
+                <div class="admin-model">
+                    {{ model.name }}
+                </div>
+
+                <div class="admin-actions">
+
+                    {% if model.add_url %}
+                    <a href="{{ model.add_url }}" class="admin-button admin-button-gold">
+                        + Añadir
+                    </a>
+                    {% endif %}
+
+                    {% if model.admin_url %}
+                    <a href="{{ model.admin_url }}" class="admin-button admin-button-dark">
+                        Administrar
+                    </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </section>
+
+        {% endfor %}
+
+        {% endif %}
+
+    </main>
+
+
+    <aside>
+
+        <section class="admin-card">
+
+            <div class="admin-card-title">
+                Accesos rápidos
+            </div>
+
+            <div class="quick-content">
+
+                <a href="/tienda/clientes/" class="quick-link">
+                    Gestionar clientes
+                </a>
+
+                <a href="/tienda/productos/" class="quick-link">
+                    Gestionar productos
+                </a>
+
+                <a href="/admin/tienda/venta/" class="quick-link">
+                    Gestionar ventas
+                </a>
+
+                <a href="/api/docs/" class="quick-link">
+                    API REST / Swagger
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <section class="admin-card">
+
+            <div class="admin-card-title">
+                Estado del sistema
+            </div>
+
+            <div class="system-info">
+
+                <strong>Proyecto</strong><br>
+                SonoraStudio & Guitar Academy
+
+                <br><br>
+
+                <strong>Módulos</strong><br>
+                Clientes, Productos y Ventas
+
+                <br><br>
+
+                <strong>Servicios</strong><br>
+                API REST + JWT + Swagger
+
+            </div>
+
+        </section>
+
+    </aside>
+
+</div>
+
+
+<script>
+    (function () {
+
+        const targets = document.querySelectorAll(".sonora-photo");
+
+        function applyImage(url) {
+            targets.forEach(function (img) {
+                img.src = url;
+            });
+        }
+
+        function testImages(urls, index) {
+
+            if (index >= urls.length) {
+                return;
+            }
+
+            const prueba = new Image();
+
+            prueba.onload = function () {
+                applyImage(urls[index]);
+            };
+
+            prueba.onerror = function () {
+                testImages(urls, index + 1);
+            };
+
+            prueba.src = urls[index];
+        }
+
+
+        fetch("/tienda/")
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (html) {
+
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+
+                const candidates = [];
+
+                doc.querySelectorAll("img").forEach(function (img) {
+
+                    const src = img.getAttribute("src");
+
+                    if (src) {
+                        candidates.push(
+                            new URL(src, window.location.origin).href
+                        );
+                    }
+
+                });
+
+                const preferred = candidates.filter(function (url) {
+
+                    const value = url.toLowerCase();
+
+                    return (
+                        value.includes("tienda") ||
+                        value.includes("sonora") ||
+                        value.includes("hero") ||
+                        value.includes("music")
+                    );
+
+                });
+
+                const ordered = preferred.concat(candidates);
+
+                ordered.push(
+                    "/static/img/img.tienda.png",
+                    "/static/img.tienda.png",
+                    "/static/img/tienda.png",
+                    "/static/img/tienda.jpg",
+                    "/static/tienda.png",
+                    "/static/tienda.jpg"
+                );
+
+                testImages(ordered, 0);
+
+            })
+            .catch(function () {
+
+                testImages([
+                    "/static/img/img.tienda.png",
+                    "/static/img.tienda.png",
+                    "/static/img/tienda.png",
+                    "/static/img/tienda.jpg"
+                ], 0);
+
+            });
+
+    })();
+</script>
+
+{% endblock %}

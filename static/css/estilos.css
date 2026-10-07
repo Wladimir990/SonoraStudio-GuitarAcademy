@@ -1,0 +1,106 @@
+/* ===== Paleta de colores del sitio ===== */
+:root {
+    --color-fondo-oscuro: #14141f;
+    --color-acento: #d4a017;
+    --color-acento-hover: #b8890f;
+}
+
+body {
+    background-color: #f7f6f3;
+}
+
+/* ===== Navbar ===== */
+.navbar {
+    background-color: var(--color-fondo-oscuro) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+    color: var(--color-acento) !important;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    color: #e8e8e8 !important;
+    transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--color-acento) !important;
+}
+
+/* ===== Header de sección (título de cada página) ===== */
+header.bg-primary {
+    background-color: var(--color-fondo-oscuro) !important;
+    border-bottom: 3px solid var(--color-acento);
+}
+
+/* ===== Botones ===== */
+.btn-primary {
+    background-color: var(--color-acento);
+    border-color: var(--color-acento);
+    color: var(--color-fondo-oscuro);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-acento-hover);
+    border-color: var(--color-acento-hover);
+    color: var(--color-fondo-oscuro);
+}
+
+.btn-success {
+    background-color: #2d6a4f;
+    border-color: #2d6a4f;
+    font-weight: 600;
+}
+
+.btn-success:hover {
+    background-color: #1b4332;
+    border-color: #1b4332;
+}
+
+/* ===== Tarjetas (catálogo y clases) ===== */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+    font-weight: 700;
+    color: var(--color-fondo-oscuro);
+}
+
+/* ===== Badges de disponibilidad ===== */
+.badge.bg-success {
+    background-color: var(--color-acento) !important;
+    color: var(--color-fondo-oscuro) !important;
+    font-weight: 600;
+    padding: 0.5em 0.8em;
+}
+
+.badge.bg-danger {
+    font-weight: 600;
+    padding: 0.5em 0.8em;
+}
+
+/* ===== Footer ===== */
+footer {
+    background-color: var(--color-fondo-oscuro) !important;
+}
+
+/* ===== Listas de modalidades (academia) ===== */
+ul li {
+    padding: 0.3rem 0;
+    font-size: 1.05rem;
+}

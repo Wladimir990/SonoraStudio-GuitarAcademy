@@ -1,0 +1,30 @@
+[
+    {
+        "nombre": "Iniciación Guitarra Acústica",
+        "modalidad": "Acústica",
+        "nivel": "Principiante",
+        "duracion_semanas": 8,
+        "cupos_disponibles": 5
+    },
+    {
+        "nombre": "maraco  - Técnica y Solos",
+        "modalidad": "Eléctrica",
+        "nivel": "coreneta ",
+        "duracion_semanas": 12,
+        "cupos_disponibles": 0
+    },
+    {
+        "nombre": "Fingerstyle Avanzado",
+        "modalidad": "Acústica",
+        "nivel": "Avanzado",
+        "duracion_semanas": 10,
+        "cupos_disponibles": 3
+    },
+    {
+        "nombre": "Iniciación Guitarra Eléctrica",
+        "modalidad": "Eléctrica",
+        "nivel": "Principiante",
+        "duracion_semanas": 8,
+        "cupos_disponibles": 7
+    }
+]

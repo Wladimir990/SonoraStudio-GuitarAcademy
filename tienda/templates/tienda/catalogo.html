@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Catálogo - SonoraStudio{% endblock %}
+
+{% block og_title %}Catálogo de Instrumentos{% endblock %}
+
+{% block encabezado %}Catálogo de Instrumentos{% endblock %}
+
+
+{% block contenido %}
+
+<p class="text-muted">
+    Mostrando <strong>{{ total_productos }}</strong> productos -
+    <strong>{{ total_disponibles }}</strong> disponibles actualmente.
+</p>
+
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    {% for producto in productos %}
+
+    <article class="col" itemscope itemtype="https://schema.org/Product">
+
+        <div class="card h-100">
+
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}"
+                style="height: 250px; object-fit: contain;">
+            {% endif %}
+
+            <div class="card-body">
+
+                <h5 class="card-title" itemprop="name">
+                    {{ producto.nombre }}
+                </h5>
+
+                <p class="card-text">
+                    <i class="bi bi-tag me-1" aria-hidden="true"></i>
+
+                    <span itemprop="category">
+                        {{ producto.categoria }}
+                    </span>
+                </p>
+
+                {% if producto.marca %}
+                <p class="card-text">
+                    <strong>Marca:</strong>
+                    {{ producto.marca }}
+                </p>
+                {% endif %}
+
+                <p class="card-text">
+                    {{ producto.descripcion }}
+                </p>
+
+                <p class="card-text fw-bold text-primary" itemprop="price" content="{{ producto.precio }}">
+                    ${{ producto.precio }}
+                </p>
+
+                <meta itemprop="priceCurrency" content="CLP">
+
+                <p>
+                    <strong>Stock:</strong>
+                    {{ producto.stock }}
+                </p>
+
+
+                {% if producto.activo and producto.stock > 0 %}
+
+                <span class="badge bg-success" itemprop="availability" content="InStock">
+                    <i class="bi bi-check-circle me-1" aria-hidden="true"></i>
+
+                    Disponible
+                </span>
+
+                {% else %}
+
+                <span class="badge bg-danger" itemprop="availability" content="OutOfStock">
+                    <i class="bi bi-x-circle me-1" aria-hidden="true"></i>
+
+                    Agotado
+                </span>
+
+                {% endif %}
+
+
+                {% if producto.ficha_tecnica %}
+
+                <div class="mt-3">
+
+                    <a href="{{ producto.ficha_tecnica.url }}" class="btn btn-outline-secondary btn-sm" target="_blank">
+                        Ver ficha técnica
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    {% empty %}
+
+    <div class="col-12 text-center py-5">
+
+        <p class="lead">
+            No hay productos disponibles en este momento.
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

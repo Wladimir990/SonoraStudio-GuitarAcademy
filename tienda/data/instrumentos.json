@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Guitarra Eléctrica Stratocaster",
+        "categoria": "Guitarras",
+        "precio": 450000,
+        "disponible": true
+    },
+    {
+        "nombre": "Bajo Eléctrico Jazz Bass",
+        "categoria": "Bajos",
+        "precio": 380000,
+        "disponible": true
+    },
+    {
+        "nombre": "Batería Acústica 5 piezas",
+        "categoria": "Percusión",
+        "precio": 620000,
+        "disponible": false
+    },
+    {
+        "nombre": "Interfaz de Audio 2 canales",
+        "categoria": "Audio",
+        "precio": 95000,
+        "disponible": true
+    },
+    {
+        "nombre": "Teclado Digital 61 teclas",
+        "categoria": "Teclados",
+        "precio": 210000,
+        "disponible": true
+    }
+]

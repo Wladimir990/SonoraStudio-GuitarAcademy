@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo %}Inicio - Guitar Academy{% endblock %}
+{% block encabezado %}{% endblock %}
+
+{% block contenido %}
+<div class="position-relative mb-5 rounded overflow-hidden shadow-lg" style="height: 400px;">
+    <img src="{% static 'img/img.academia.png' %}" alt="Guitar Academy" class="w-100 h-100" style="object-fit: cover;">
+    <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-white text-center px-3"
+        style="background: linear-gradient(180deg, rgba(20,20,31,0.3) 0%, rgba(20,20,31,0.75) 100%);">
+        <span class="badge bg-warning text-dark mb-3 px-3 py-2" style="letter-spacing: 1px;">ACADEMIA DE GUITARRA</span>
+        <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 10px rgba(0,0,0,0.9);">{{ nombre_academia }}</h1>
+    </div>
+</div>
+
+<div class="row align-items-center g-4">
+    <div class="col-md-8">
+        <p class="fs-5">{{ mensaje }}:</p>
+        <ul class="list-unstyled">
+            {% for modalidad in modalidades %}
+            <li class="mb-1"><i class="bi bi-check2-circle text-success me-2"></i>Guitarra {{ modalidad }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-4 text-md-end text-center">
+        <a href="{% url 'academia:clases' %}" class="btn btn-success btn-lg px-4">
+            Ver clases disponibles <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+    </div>
+</div>
+{% endblock %}

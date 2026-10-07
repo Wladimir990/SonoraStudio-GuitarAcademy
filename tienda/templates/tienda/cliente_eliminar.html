@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Eliminar Cliente - SonoraStudio{% endblock %}
+
+{% block encabezado %}Eliminar Cliente{% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+    <div class="card-body">
+
+        <h2>Eliminar cliente</h2>
+
+        <p>
+            ¿Estás seguro de que deseas eliminar al cliente
+            <strong>
+                {{ cliente.nombres }} {{ cliente.apellidos }}
+            </strong>?
+        </p>
+
+        <div class="alert alert-warning">
+            Esta acción eliminará al cliente de la base de datos.
+        </div>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-danger">
+                Confirmar eliminación
+            </button>
+
+            <a href="{% url 'tienda:cliente_detalle' cliente.pk %}" class="btn btn-secondary">
+                Cancelar
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

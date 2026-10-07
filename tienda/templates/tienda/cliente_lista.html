@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Clientes - SonoraStudio{% endblock %}
+
+{% block encabezado %}Gestión de Clientes{% endblock %}
+
+{% block contenido %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Clientes</h2>
+        <p class="text-muted">
+            Administración de clientes registrados en SonoraStudio.
+        </p>
+    </div>
+
+    <a href="{% url 'tienda:cliente_crear' %}" class="btn btn-warning">
+        Nuevo cliente
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>RUT</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td>{{ cliente.id }}</td>
+                <td>{{ cliente.rut }}</td>
+                <td>{{ cliente.nombres }} {{ cliente.apellidos }}</td>
+                <td>{{ cliente.email }}</td>
+                <td>{{ cliente.telefono }}</td>
+
+                <td>
+                    {% if cliente.activo %}
+                    <span class="badge bg-success">Activo</span>
+                    {% else %}
+                    <span class="badge bg-secondary">Inactivo</span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a href="{% url 'tienda:cliente_detalle' cliente.pk %}" class="btn btn-info btn-sm">
+                        Ver
+                    </a>
+
+                    <a href="{% url 'tienda:cliente_editar' cliente.pk %}" class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <a href="{% url 'tienda:cliente_eliminar' cliente.pk %}" class="btn btn-danger btn-sm">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">
+                    No hay clientes registrados.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

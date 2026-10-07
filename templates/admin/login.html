@@ -1,0 +1,380 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Iniciar sesión - SonoraStudio
+{% endblock %}
+
+{% block contenido %}
+
+<style>
+    .login-hero {
+        position: relative;
+
+        width: 100%;
+        min-height: 540px;
+
+        border-radius: 8px;
+        overflow: hidden;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin-bottom: 45px;
+
+        box-shadow: 0 15px 40px rgba(0, 0, 0, .18);
+
+        background: #333;
+    }
+
+    .sonora-photo {
+        position: absolute;
+
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        z-index: 1;
+    }
+
+    .login-overlay {
+        position: absolute;
+        inset: 0;
+
+        background: rgba(0, 0, 0, .52);
+
+        z-index: 2;
+    }
+
+    .login-card {
+        position: relative;
+        z-index: 3;
+
+        width: 100%;
+        max-width: 450px;
+
+        box-sizing: border-box;
+
+        background: rgba(255, 255, 255, .97);
+
+        padding: 40px;
+
+        border-radius: 12px;
+
+        box-shadow: 0 20px 50px rgba(0, 0, 0, .32);
+    }
+
+    .login-icon {
+        color: #e5aa00;
+        text-align: center;
+        font-size: 42px;
+        margin-bottom: 5px;
+    }
+
+    .login-card h1 {
+        color: #171717;
+        text-align: center;
+
+        font-size: 31px;
+
+        margin: 0 0 8px;
+    }
+
+    .login-description {
+        text-align: center;
+        color: #666;
+        margin-bottom: 30px;
+    }
+
+    .login-field {
+        margin-bottom: 20px;
+    }
+
+    .login-field label {
+        display: block;
+        color: #222;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .login-field input {
+        width: 100%;
+        box-sizing: border-box;
+
+        background: white;
+        color: #111;
+
+        border: 1px solid #ccc;
+        border-radius: 6px;
+
+        padding: 13px 14px;
+
+        font-size: 16px;
+    }
+
+    .login-field input:focus {
+        outline: none;
+        border-color: #e5aa00;
+
+        box-shadow:
+            0 0 0 3px rgba(229, 170, 0, .17);
+    }
+
+    .login-button {
+        width: 100%;
+
+        border: 0;
+
+        background: #e5aa00;
+        color: #111;
+
+        padding: 14px;
+
+        border-radius: 7px;
+
+        font-size: 15px;
+        font-weight: 800;
+
+        cursor: pointer;
+    }
+
+    .login-button:hover {
+        background: #f2ba16;
+    }
+
+    .login-error {
+        background: #f8d7da;
+        color: #842029;
+
+        padding: 12px;
+
+        border-radius: 6px;
+
+        text-align: center;
+
+        margin-bottom: 20px;
+    }
+
+    .back-link {
+        display: block;
+
+        text-align: center;
+
+        margin-top: 20px;
+
+        color: #555;
+
+        text-decoration: none;
+    }
+
+    .back-link:hover {
+        color: #e5aa00;
+    }
+</style>
+
+
+<section class="login-hero">
+
+    <img class="sonora-photo" alt="SonoraStudio Music Store">
+
+    <div class="login-overlay"></div>
+
+
+    <div class="login-card">
+
+        <div class="login-icon">
+            ♪
+        </div>
+
+        <h1>
+            Iniciar sesión
+        </h1>
+
+        <p class="login-description">
+            Administración de SonoraStudio & Guitar Academy
+        </p>
+
+
+        {% if form.errors %}
+
+        <div class="login-error">
+            Usuario o contraseña incorrectos.
+        </div>
+
+        {% endif %}
+
+
+        <form method="post" action="{{ app_path }}">
+
+            {% csrf_token %}
+
+
+            <div class="login-field">
+
+                <label>
+                    Nombre de usuario
+                </label>
+
+                {{ form.username }}
+
+            </div>
+
+
+            <div class="login-field">
+
+                <label>
+                    Contraseña
+                </label>
+
+                {{ form.password }}
+
+            </div>
+
+
+            {% if next %}
+
+            <input type="hidden" name="next" value="{{ next }}">
+
+            {% endif %}
+
+
+            <button type="submit" class="login-button">
+                Iniciar sesión
+            </button>
+
+        </form>
+
+
+        <a href="/tienda/" class="back-link">
+            ← Volver a SonoraStudio
+        </a>
+
+    </div>
+
+</section>
+
+
+<script>
+    (function () {
+
+        const targets = document.querySelectorAll(".sonora-photo");
+
+        function applyImage(url) {
+
+            targets.forEach(function (img) {
+                img.src = url;
+            });
+
+        }
+
+        function testImages(urls, index) {
+
+            if (index >= urls.length) {
+                return;
+            }
+
+            const prueba = new Image();
+
+            prueba.onload = function () {
+                applyImage(urls[index]);
+            };
+
+            prueba.onerror = function () {
+                testImages(urls, index + 1);
+            };
+
+            prueba.src = urls[index];
+        }
+
+
+        fetch("/tienda/")
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (html) {
+
+                const parser = new DOMParser();
+
+                const doc =
+                    parser.parseFromString(
+                        html,
+                        "text/html"
+                    );
+
+                const candidates = [];
+
+                doc.querySelectorAll("img").forEach(function (img) {
+
+                    const src = img.getAttribute("src");
+
+                    if (src) {
+
+                        candidates.push(
+                            new URL(
+                                src,
+                                window.location.origin
+                            ).href
+                        );
+
+                    }
+
+                });
+
+
+                const preferred =
+                    candidates.filter(function (url) {
+
+                        const value =
+                            url.toLowerCase();
+
+                        return (
+                            value.includes("tienda") ||
+                            value.includes("sonora") ||
+                            value.includes("hero") ||
+                            value.includes("music")
+                        );
+
+                    });
+
+
+                const ordered =
+                    preferred.concat(candidates);
+
+
+                ordered.push(
+                    "/static/img/img.tienda.png",
+                    "/static/img.tienda.png",
+                    "/static/img/tienda.png",
+                    "/static/img/tienda.jpg",
+                    "/static/tienda.png",
+                    "/static/tienda.jpg"
+                );
+
+
+                testImages(
+                    ordered,
+                    0
+                );
+
+            })
+            .catch(function () {
+
+                testImages(
+                    [
+                        "/static/img/img.tienda.png",
+                        "/static/img.tienda.png",
+                        "/static/img/tienda.png",
+                        "/static/img/tienda.jpg"
+                    ],
+                    0
+                );
+
+            });
+
+    })();
+</script>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Clases - Guitar Academy{% endblock %}
+{% block og_title %}Clases de guitarra - Guitar Academy{% endblock %}
+
+{% block encabezado %}Nuestras Clases{% endblock %}
+
+{% block contenido %}
+<p class="text-muted">
+    Mostrando <strong>{{ total_clases }}</strong> clases —
+    <strong>{{ total_con_cupos }}</strong> con cupos disponibles.
+</p>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    {% for clase in clases %}
+    <article class="col" itemscope itemtype="https://schema.org/Course">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title" itemprop="name">{{ clase.nombre }}</h5>
+                <p class="card-text">
+                    <i class="bi bi-guitar me-1" aria-hidden="true"></i>
+                    <span itemprop="educationalCredentialAwarded">{{ clase.modalidad }}</span>
+                </p>
+                <p class="card-text">
+                    <i class="bi bi-bar-chart me-1" aria-hidden="true"></i>
+                    Nivel: <span itemprop="difficulty">{{ clase.nivel }}</span>
+                </p>
+                <p class="card-text">
+                    <i class="bi bi-clock me-1" aria-hidden="true"></i>
+                    <span itemprop="timeRequired">{{ clase.duracion_semanas }} semanas</span>
+                </p>
+                {% if clase.cupos_disponibles > 0 %}
+                <span class="badge bg-success">
+                    <i class="bi bi-people me-1" aria-hidden="true"></i>
+                    <span itemprop="maximumAttendeeCapacity">{{ clase.cupos_disponibles }} cupos disponibles</span>
+                </span>
+                {% else %}
+                <span class="badge bg-danger">Sin cupos</span>
+                {% endif %}
+            </div>
+        </div>
+    </article>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <p class="lead">No hay clases programadas en este momento.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

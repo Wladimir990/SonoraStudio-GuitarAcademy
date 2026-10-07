@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Meta tags para SEO -->
+    <meta name="description"
+        content="SonoraStudio & Guitar Academy – Tienda de instrumentos musicales y academia de guitarra. 11 años de trayectoria." />
+    <meta name="robots" content="index, follow" />
+    <!-- Open Graph para redes sociales -->
+    <meta property="og:title" content="{% block og_title %}SonoraStudio & Guitar Academy{% endblock %}" />
+    <meta property="og:description" content="Todo el sonido que necesitas, en un solo lugar." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:image" content="{% static 'img/im.tienda.png' %}" />
+    <!-- Título dinámico -->
+    <title>{% block titulo %}SonoraStudio & Guitar Academy{% endblock %}</title>
+
+    <!-- Bootstrap 5 (CDN con integridad) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <!-- Google Fonts (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}" />
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <!-- ============ NAVEGACIÓN PRINCIPAL ============ -->
+    <header role="banner" aria-label="Encabezado principal">
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" aria-label="Menú de navegación principal">
+            <div class="container">
+                <a class="navbar-brand" href="/" aria-label="Ir a la página de inicio">
+                    <i class="bi bi-music-note-beamed me-2" aria-hidden="true"></i>
+                    <span>SonoraStudio &amp; Guitar Academy</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav"
+                    aria-controls="menuNav" aria-expanded="false" aria-label="Alternar navegación">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="menuNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'tienda:inicio' %}">
+                                <i class="bi bi-shop me-1" aria-hidden="true"></i>Tienda
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'tienda:catalogo' %}">
+                                <i class="bi bi-grid-3x3-gap me-1" aria-hidden="true"></i>Catálogo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'academia:inicio' %}">
+                                <i class="bi bi-mortarboard me-1" aria-hidden="true"></i>Academia
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'academia:clases' %}">
+                                <i class="bi bi-calendar-event me-1" aria-hidden="true"></i>Clases
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ============ ENCABEZADO DE PÁGINA ============ -->
+    <header class="page-header text-white text-center py-4" role="banner" aria-label="Encabezado de sección">
+        <div class="container">
+            <h1 class="display-5 fw-bold">{% block encabezado %}Bienvenido{% endblock %}</h1>
+            <div class="header-underline mx-auto" aria-hidden="true"></div>
+        </div>
+    </header>
+
+    <!-- ============ CONTENIDO PRINCIPAL ============ -->
+    <main class="container my-5 pt-4" role="main" id="contenido-principal">
+        {% block contenido %}
+        {% endblock %}
+    </main>
+
+    <!-- ============ PIE DE PÁGINA ============ -->
+    <footer class="bg-dark text-white py-4 mt-5" role="contentinfo" aria-label="Pie de página">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2026 SonoraStudio &amp; Guitar Academy</p>
+                    <small class="text-muted">Evaluación Sumativa #1 · Programación Back End</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <!-- Enlaces a redes sociales (placeholder) -->
+                    <a href="#" class="text-white me-3" aria-label="Síguenos en Instagram"><i
+                            class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white me-3" aria-label="Síguenos en YouTube"><i
+                            class="bi bi-youtube"></i></a>
+                    <a href="#" class="text-white" aria-label="Síguenos en Facebook"><i class="bi bi-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts (Bootstrap JS con defer o al final) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"
+        defer></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

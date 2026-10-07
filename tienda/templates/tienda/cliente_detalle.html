@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Detalle Cliente - SonoraStudio{% endblock %}
+
+{% block encabezado %}Detalle del Cliente{% endblock %}
+
+{% block contenido %}
+
+<div class="card shadow">
+    <div class="card-body">
+
+        <h2>
+            {{ cliente.nombres }} {{ cliente.apellidos }}
+        </h2>
+
+        <hr>
+
+        <p>
+            <strong>RUT:</strong>
+            {{ cliente.rut }}
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            {{ cliente.email }}
+        </p>
+
+        <p>
+            <strong>Teléfono:</strong>
+            {{ cliente.telefono }}
+        </p>
+
+        <p>
+            <strong>Dirección:</strong>
+            {{ cliente.direccion }}
+        </p>
+
+        <p>
+            <strong>Fecha de registro:</strong>
+            {{ cliente.fecha_registro }}
+        </p>
+
+        <p>
+            <strong>Estado:</strong>
+
+            {% if cliente.activo %}
+            <span class="badge bg-success">Activo</span>
+            {% else %}
+            <span class="badge bg-secondary">Inactivo</span>
+            {% endif %}
+        </p>
+
+        <hr>
+
+        <a href="{% url 'tienda:cliente_editar' cliente.pk %}" class="btn btn-warning">
+            Editar
+        </a>
+
+        <a href="{% url 'tienda:cliente_eliminar' cliente.pk %}" class="btn btn-danger">
+            Eliminar
+        </a>
+
+        <a href="{% url 'tienda:cliente_lista' %}" class="btn btn-secondary">
+            Volver
+        </a>
+
+    </div>
+</div>
+
+{% endblock %}
